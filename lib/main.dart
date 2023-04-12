@@ -16,16 +16,32 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int count = 0;
 
   void decrement() {
-    print("Decrement");
+    setState(() {
+      count--;
+    });
+    print(count);
   }
 
   void increment() {
-    print("Increment");
+    setState(() {
+      count++;
+    });
+    print(count);
   }
+
+  bool get isEmpty => count <= 0;
+  bool get isFull => count >= 15;
 
   @override
   Widget build(BuildContext context) {
@@ -40,21 +56,21 @@ class HomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                "Hey, welcome !",
-                style: TextStyle(
+              Text(
+                isFull ? "Crowded!" : "Welcome !",
+                style: const TextStyle(
                   fontSize: 40,
                   color: Colors.white,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 3,
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.all(32),
-                child: Text('0',
+              Padding(
+                padding: const EdgeInsets.all(32),
+                child: Text(count.toString(),
                     style: TextStyle(
                       fontSize: 100,
-                      color: Colors.white,
+                      color: isFull ? Colors.red : Colors.white,
                       fontWeight: FontWeight.w500,
                       letterSpacing: 3,
                     )),
@@ -64,14 +80,16 @@ class HomePage extends StatelessWidget {
                 children: [
                   TextButton(
                     style: TextButton.styleFrom(
-                      backgroundColor: Colors.white,
+                      backgroundColor: isEmpty
+                          ? Colors.white.withOpacity(0.2)
+                          : Colors.white,
                       fixedSize: const Size(70, 70),
                       foregroundColor: Colors.black,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                    onPressed: decrement,
+                    onPressed: isEmpty ? null : decrement,
                     child: const Text(
                       "Saiu",
                       style: TextStyle(
@@ -83,13 +101,15 @@ class HomePage extends StatelessWidget {
                   const SizedBox(width: 32),
                   TextButton(
                     style: TextButton.styleFrom(
-                        backgroundColor: Colors.white,
+                        backgroundColor: isFull
+                            ? Colors.white.withOpacity(0.2)
+                            : Colors.white,
                         fixedSize: const Size(70, 70),
                         foregroundColor: Colors.black,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),
                         )),
-                    onPressed: increment,
+                    onPressed: isFull ? null : increment,
                     child: const Text(
                       "Entrou",
                       style: TextStyle(
