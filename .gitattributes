@@ -1,2 +1,4 @@
 *.html linguist-vendored
 *.css linguist-vendored
+CMakeLists.txt
+generated_plugins.cmake
