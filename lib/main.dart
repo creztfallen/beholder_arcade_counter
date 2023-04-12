@@ -57,7 +57,11 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                isFull ? "Crowded!" : "Welcome !",
+                isFull
+                    ? "Crowded!"
+                    : isEmpty
+                        ? "Store is Empty."
+                        : "Welcome !",
                 style: const TextStyle(
                   fontSize: 40,
                   color: Colors.white,
@@ -91,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     onPressed: isEmpty ? null : decrement,
                     child: const Text(
-                      "Saiu",
+                      "Left",
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.black,
@@ -111,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                         )),
                     onPressed: isFull ? null : increment,
                     child: const Text(
-                      "Entrou",
+                      "Got in",
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.black,
